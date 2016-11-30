@@ -5,11 +5,12 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost/vuetest'
+
+app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
-from app import models
+from app import models, views
 
 migrate = Migrate(app, db)
 
