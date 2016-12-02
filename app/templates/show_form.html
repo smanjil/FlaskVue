@@ -12,11 +12,7 @@
 
             <button>Add Name</button>
 
-
-            <h2> My names.. </h2>
-            <ul>
-                <li v-for="name in nameList" v-text="name"></li>
-            </ul>
+            <name-list :list="nameList"></name-list>
 
         </div>
 
@@ -24,6 +20,27 @@
         <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 
         <script>
+
+            Vue.component('name-list', {
+
+                props: ['list'],
+
+                template: `
+                            <div>
+                                <task v-for="name in list" v-text="name"></task>
+                            </div>
+                        `
+
+            });
+
+            Vue.component('task', {
+
+                template: `
+                        <li><slot></slot></li>
+                        `
+
+            });
+
 
             new Vue({
 
@@ -35,8 +52,9 @@
 
                mounted(){
                    this.$http.get('/api/name').then((response) => {
-                       this.nameList.push(JSON.parse(response.body));
-                    //    console.log(JSON.parse(response.body));
+                       var names = JSON.parse(response.body);
+                        this.nameList= this.nameList.concat(JSON.parse(response.body));
+                        console.log(this.nameList);
                    });
                }
 
