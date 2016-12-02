@@ -6,29 +6,40 @@
     </head>
     <body>
         <div id="root">
-            <form action="" method="post" name="login">
-                <p>Please enter your name: <br>
-                    <input type="text" v-model="name">
 
-                <p><input type="submit" value="Submit"></p>
-            </form>
+            <p>Please enter your name: <br>
+                <input type="text">
+
+            <button>Add Name</button>
+
+
+            <h2> My names.. </h2>
+            <ul>
+                <li v-for="name in nameList" v-text="name"></li>
+            </ul>
+
         </div>
 
         <script src="https://unpkg.com/vue@2.1.3/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 
         <script>
 
-            var app = new Vue({
+            new Vue({
 
                 el: '#root',
 
                 data: {
-                    name: 'Manjil'
+                    nameList: []
                 },
 
-                mounted: {
+               mounted(){
+                   this.$http.get('/api/name').then((response) => {
+                       this.nameList.push(JSON.parse(response.body));
+                    //    console.log(JSON.parse(response.body));
+                   });
+               }
 
-                }
 
             });
 
