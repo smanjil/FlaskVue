@@ -14,9 +14,10 @@ def get_name():
     names = []
     for user in users:
         names.append(user.name)
-    print json.dumps(names)
     return json.dumps(names)
 
-# @app.route('/api/name/', methods=['POST'])
-# def post_name():
-#     User(User.name=name)
+@app.route('/api/name/', methods=['POST'])
+def post_name():
+    u = User(name=name)
+    db.session.add(u)
+    db.session.commit()
