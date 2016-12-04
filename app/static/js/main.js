@@ -34,10 +34,11 @@ new Vue({
     methods: {
         addName(){
             this.nameList = this.nameList.concat(this.newName);
+            var name = this.newName;
             this.newName = '';
 
-            Vue.http.post('/api/name', {foo: 'this.newName'}).then((response) => {
-                console.log(foo);
+            this.$http.post('/api/name/'+name).then((response) => {
+                console.log(response.message);
             });
         }
     },
